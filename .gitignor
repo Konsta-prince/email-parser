@@ -1,0 +1,9 @@
+config.json
+build/
+dist/
+*.toc
+*.pyz
+*.pkg
+*.spec
+__pycache__/
+*.pyc
