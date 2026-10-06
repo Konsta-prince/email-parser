@@ -13,6 +13,7 @@ from openpyxl.styles import Font, Alignment
 # БЛОК 1: ВСЕ ФУНКЦИИ (ИНСТРУМЕНТЫ)
 # ==========================================
 
+#Читает настройки из config.json
 def load_config():
     if getattr(sys, 'frozen', False):
         base_path = os.path.dirname(sys.executable)
@@ -23,12 +24,18 @@ def load_config():
     with open(config_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
+#Функция для подключения к почтовому серверу 
 def connect_to_mail(server, email_addr, password):
     mail = imaplib.IMAP4_SSL(server)
     mail.login(email_addr, password)
     mail.select('INBOX')
     return mail
 
+# ==========================================
+# ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ (ОЧИСТКА ДАННЫХ)
+# Эти функции превращают "сырые" данные письма 
+# в чистый текст, правильные даты и email-адреса.
+# ==========================================
 def decode_header_value(value):
     if value is None:
         return ""
@@ -97,7 +104,9 @@ def format_date(date_string):
             return date_obj.strftime("%Y-%m-%d %H:%M:%S")
         except:
             return date_string
+#===========================================
 
+#Подключение к почте, сбор темы,текста и даты, сохранение в список 
 def search_and_process_emails(mail, date_from, keywords):
     print(f"Ищем письма с {date_from}...")
     print(f"Ключевые слова: {keywords}")
@@ -144,6 +153,7 @@ def search_and_process_emails(mail, date_from, keywords):
     print(f"\nИтого найдено писем с ключевыми словами: {len(found_emails)}")
     return found_emails
 
+# Функция для создания и сохранения отчета в Excel с форматированием
 def save_to_excel(found_emails):
     if not found_emails:
         print("Нет данных для сохранения.")
