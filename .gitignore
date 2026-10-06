@@ -8,3 +8,5 @@ dist/
 __pycache__/
 *.pyc
 ty.py
+search.exe
+.vscode/
