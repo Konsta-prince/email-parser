@@ -7,7 +7,6 @@ dist/
 *.spec
 __pycache__/
 *.pyc
-ty.py
 search.exe
 .vscode/
 log.txt
